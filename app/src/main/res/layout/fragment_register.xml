@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.LoginActivity">
+    android:layout_height="match_parent" >
 
     <LinearLayout
         android:id="@+id/layoutMain"
@@ -21,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/componentPadding"
-            android:text="@string/loginTitle"
+            android:text="@string/registerTitle"
             android:textColor="@color/titleTextColor"
             android:textSize="@dimen/TitleTextSize" />
 
@@ -49,29 +48,29 @@
             android:textColor="@color/black"
             android:textColorHint="@color/editTextHintColor" />
 
+        <EditText
+            android:id="@+id/etConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:hint="@string/confirmPassword"
+            android:importantForAutofill="no"
+            android:inputType="textPassword"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textColorHint="@color/editTextHintColor" />
+
         <LinearLayout
             android:id="@+id/layoutLoginButtons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:padding="@dimen/componentPadding">
 
             <Button
-                android:id="@+id/btnSubmit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/submit"
-                android:textAllCaps="false" />
-
-            <Space
-                android:layout_width="@dimen/componentPadding"
-                android:layout_height="wrap_content" />
-
-            <Button
                 android:id="@+id/btnRegister"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="wrap_content"
+                android:layout_width ="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/register"
                 android:textAllCaps="false" />
