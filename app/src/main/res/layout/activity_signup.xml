@@ -15,10 +15,10 @@
         android:background="@color/backgroundColor"
         android:orientation="vertical"
         android:scrollbarAlwaysDrawVerticalTrack="true"
-        tools:context=".ui.auth.LoginActivity">
+        tools:context=".ui.auth.SignUpActivity">
 
         <RelativeLayout
-            android:id="@+id/login_layout"
+            android:id="@+id/signUp_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true">
@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:gravity="center_horizontal"
-                android:text="@string/loginTitle"
+                android:text="@string/register"
                 android:textColor="@color/white"
                 android:textSize="@dimen/TitleTextSize"
                 android:textStyle="bold" />
@@ -51,6 +51,7 @@
                     android:orientation="vertical"
                     android:paddingTop="30dp">
 
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -67,7 +68,6 @@
                         android:drawableLeft="@drawable/ic_email"
                         android:drawablePadding="10dp"
                         android:hint="@string/emailHint"
-                        android:importantForAutofill="no"
                         android:inputType="textEmailAddress"
                         android:singleLine="true"
                         android:text="@={viewmodel.email}" />
@@ -87,18 +87,18 @@
                         android:drawableLeft="@drawable/ic_lock"
                         android:drawablePadding="10dp"
                         android:hint="@string/passwordHint"
-                        android:importantForAutofill="no"
                         android:inputType="textPassword"
                         android:singleLine="true"
                         android:text="@={viewmodel.password}" />
 
+
                     <Button
-                        android:id="@+id/button_sign_in"
+                        android:id="@+id/button_sign_up"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="22dp"
-                        android:onClick="@{() -> viewmodel.login()}"
-                        android:text="@string/submit"
+                        android:onClick="@{() -> viewmodel.signup()}"
+                        android:text="@string/register"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="@dimen/midTextSize" />
@@ -108,8 +108,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:onClick="@{(v) -> viewmodel.goToSignup(v)}"
-                        android:text="@string/registerHere"
+                        android:onClick="@{(v) -> viewmodel.goToLogin(v)}"
+                        android:text="@string/loginHere"
                         android:textAlignment="center"
                         android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
                 </LinearLayout>
