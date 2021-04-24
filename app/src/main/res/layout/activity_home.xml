@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="loodos.droid.bitcointicker.ui.home.HomeViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.home.HomeActivity">
+
+        <TextView
+            android:id="@+id/textViewEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@{viewmodel.user.email}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            tools:text="abc@gmail.com" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewEmail"
+            android:layout_centerHorizontal="true"
+            android:onClick="@{(v) -> viewmodel.logout(v)}"
+            android:text="@string/logout" />
+
+    </RelativeLayout>
+
+</layout>
