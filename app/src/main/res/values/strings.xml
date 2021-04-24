@@ -10,5 +10,7 @@
     <string name="emailHint">abc@gmail.com</string>
     <string name="passwordHint">******</string>
     <string name="registerHere">Hesabınız Yok Mu?\nBuradan Kaydolun</string>
+    <string name="loginHere">Hesabınız Mı Var\nBuradan Giriş Yapın</string>
     <string name="imageButtonDesc">ProfileImageButton</string>
+    <string name="logout">Çıkış Yap</string>
 </resources>
