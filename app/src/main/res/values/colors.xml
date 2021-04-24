@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="backgroundColor">#008577</color>
     <color name="titleTextColor">#FF3700B3</color>
     <color name="editTextHintColor">#52afaa</color>
 </resources>
