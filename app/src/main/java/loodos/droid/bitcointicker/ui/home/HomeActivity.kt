@@ -1,29 +1,53 @@
 package loodos.droid.bitcointicker.ui.home
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
+import androidx.activity.viewModels
+import androidx.appcompat.widget.Toolbar
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
+import kotlinx.android.synthetic.main.activity_home.*
 import loodos.droid.bitcointicker.R
-import loodos.droid.bitcointicker.databinding.ActivityHomeBinding
-import org.kodein.di.KodeinAware
-import org.kodein.di.generic.instance
-import org.kodein.di.android.kodein
+import loodos.droid.bitcointicker.core.common.BaseActivity
+import loodos.droid.bitcointicker.core.common.NavigationHost
+import dagger.hilt.android.AndroidEntryPoint
 
-class HomeActivity : AppCompatActivity(), KodeinAware {
+@AndroidEntryPoint
+class HomeActivity : BaseActivity(), NavigationHost {
 
-    override val kodein by kodein()
-    private val factory: HomeViewModelFactory by instance()
+    private val viewModel: HomeViewModel by viewModels()
 
-    private lateinit var viewModel: HomeViewModel
+    companion object {
+        private val TOP_LEVEL_DESTINATIONS = setOf(
+            R.id.navigation_coins_list,
+            R.id.navigation_favourites
+        )
+    }
+
+    private lateinit var navController: NavController
+    private var navHostFragment: NavHostFragment? = null
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        val binding: ActivityHomeBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_home)
-        viewModel = ViewModelProviders.of(this, factory).get(HomeViewModel::class.java)
-        binding.viewmodel = viewModel
+        navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.homeNavHostFragment) as? NavHostFragment
+                ?: return
+
+        navController = findNavController(R.id.homeNavHostFragment)
+        appBarConfiguration = AppBarConfiguration(TOP_LEVEL_DESTINATIONS)
+
+        homeBottomNavView.setupWithNavController(navController)
+    }
+
+    /**
+     * Callback method to update the toolbar's title based on the selected bottom tab
+     */
+    override fun registerToolbarWithNavigation(toolbar: Toolbar) {
+        toolbar.setupWithNavController(navController, appBarConfiguration)
     }
 }
