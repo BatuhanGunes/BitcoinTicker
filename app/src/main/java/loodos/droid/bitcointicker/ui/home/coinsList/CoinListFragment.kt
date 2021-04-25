@@ -2,20 +2,20 @@ package loodos.droid.bitcointicker.ui.home.coinsList
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_list.*
 import loodos.droid.bitcointicker.adapters.CoinsListAdapter
 import loodos.droid.bitcointicker.adapters.OnItemClickCallback
 import loodos.droid.bitcointicker.core.common.MainNavigationFragment
-import loodos.droid.bitcointicker.util.Constants
-import loodos.droid.bitcointicker.util.extensions.doOnChange
-import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_list.*
 import loodos.droid.bitcointicker.databinding.FragmentListBinding
 import loodos.droid.bitcointicker.ui.projectProfile.ProjectProfileActivity
+import loodos.droid.bitcointicker.util.Constants
+import loodos.droid.bitcointicker.util.extensions.doOnChange
+import java.util.*
 
 @AndroidEntryPoint
 class CoinListFragment : MainNavigationFragment(), OnItemClickCallback {
@@ -48,6 +48,18 @@ class CoinListFragment : MainNavigationFragment(), OnItemClickCallback {
             layoutManager = LinearLayoutManager(context)
             adapter = coinsListAdapter
         }
+
+        search_bar.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+            android.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                coinsListAdapter.filter.filter(newText)
+                return false
+            }
+        })
     }
 
     override fun observeViewModel() {
