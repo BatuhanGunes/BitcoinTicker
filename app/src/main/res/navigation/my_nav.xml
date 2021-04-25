@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/navigation_coins_list">
+
+    <fragment
+        android:id="@+id/navigation_coins_list"
+        android:name="loodos.droid.bitcointicker.ui.home.coinsList.CoinListFragment"
+        android:label="@string/all_coins"
+        tools:layout="@layout/fragment_list" />
+    <fragment
+        android:id="@+id/navigation_favourites"
+        android:name="loodos.droid.bitcointicker.ui.home.favorites.FavoritesFragment"
+        android:label="@string/favourites"
+        tools:layout="@layout/fragment_favorites" />
+</navigation>
