@@ -8,7 +8,20 @@ apply plugin: 'dagger.hilt.android.plugin'
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
-
+    signingConfigs {
+        debug {
+            storeFile file('bitcoin_debug.jks')
+            storePassword '123456'
+            keyAlias 'key0'
+            keyPassword '123456'
+        }
+        release {
+            storeFile file('bitcoin_release.jks')
+            storePassword '123456'
+            keyAlias 'key0'
+            keyPassword '123456'
+        }
+    }
     defaultConfig {
         applicationId "loodos.droid.bitcointicker"
         minSdkVersion 21
@@ -18,12 +31,18 @@ android {
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.debug
     }
 
     buildTypes {
         release {
+            debuggable false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            signingConfig signingConfigs.debug
         }
     }
     buildFeatures {
