@@ -10,10 +10,22 @@
         android:id="@+id/navigation_coins_list"
         android:name="loodos.droid.bitcointicker.ui.home.coinsList.CoinListFragment"
         android:label="@string/all_coins"
-        tools:layout="@layout/fragment_list" />
+        tools:layout="@layout/fragment_list" >
+        <action
+            android:id="@+id/action_navigation_coins_list_to_navigation_favourites"
+            app:destination="@id/navigation_favourites"
+            app:enterAnim="@animator/exit_to_left"
+            app:exitAnim="@animator/enter_from_right" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_favourites"
         android:name="loodos.droid.bitcointicker.ui.home.favorites.FavoritesFragment"
         android:label="@string/favourites"
-        tools:layout="@layout/fragment_favorites" />
+        tools:layout="@layout/fragment_favorites" >
+        <action
+            android:id="@+id/action_navigation_favourites_to_navigation_coins_list"
+            app:destination="@id/navigation_coins_list"
+            app:enterAnim="@animator/enter_from_right"
+            app:exitAnim="@animator/enter_from_left" />
+    </fragment>
 </navigation>
