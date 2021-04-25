@@ -113,3 +113,38 @@ dependencies {
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha01"
     kapt "androidx.hilt:hilt-compiler:1.0.0-alpha01"
 }
+
+task exportReleaseApk(type: Copy) {
+    from('build/outputs/apk/release/')
+    into('release/')
+    include('app-release.apk')
+    String versionName = "bitconticker_v1_0_${grgit.repository.jgit.log().call().size()}.apk"
+    rename('app-release.apk', versionName)
+}
+
+task exportDebugApk(type: Copy) {
+    from('build/outputs/apk/debug/')
+    into('release/')
+    include('app-debug.apk')
+    String versionName = "bitconticker_debug_v1_0_${grgit.repository.jgit.log().call().size()}.apk"
+    rename('app-debug.apk', versionName)
+}
+
+task copyReleaseApk(type: Copy) {
+    from('build/outputs/apk/release/')
+    into('release/')
+    include('app-release.apk')
+    String versionName = "bitconticker_v1_0_${grgit.repository.jgit.log().call().size()}.apk"
+    rename('app-release.apk', versionName)
+}
+
+task copyDebugApk(type: Copy) {
+    from('build/outputs/apk/debug/')
+    into('release/')
+    include('app-debug.apk')
+    String versionName = "bitconticker_debug_v1_0_${grgit.repository.jgit.log().call().size()}.apk"
+    rename('app-debug.apk', versionName)
+}
+
+exportDebugApk.dependsOn(build, assemble)
+exportReleaseApk.dependsOn(build, assemble)
