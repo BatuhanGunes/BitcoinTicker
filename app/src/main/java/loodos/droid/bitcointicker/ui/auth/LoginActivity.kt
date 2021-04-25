@@ -2,19 +2,18 @@ package loodos.droid.bitcointicker.ui.auth
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_login.*
 import loodos.droid.bitcointicker.R
+import loodos.droid.bitcointicker.core.common.BaseActivity
 import loodos.droid.bitcointicker.databinding.ActivityLoginBinding
-import loodos.droid.bitcointicker.util.startHomeActivity
+import loodos.droid.bitcointicker.util.UIHelper.startHomeActivity
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
-class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
+class LoginActivity : BaseActivity(), AuthListener, KodeinAware {
 
     override val kodein by kodein()
     private val factory: AuthViewModelFactory by instance()
@@ -43,7 +42,7 @@ class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
 
     override fun onFailure(message: String) {
         progressbar.visibility = View.GONE
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        showToast(message)
     }
 
     override fun onStart() {
