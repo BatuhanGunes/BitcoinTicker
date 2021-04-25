@@ -11,6 +11,9 @@ import loodos.droid.bitcointicker.util.extensions.dollarString
 import loodos.droid.bitcointicker.util.extensions.emptyIfNull
 import kotlinx.android.synthetic.main.item_coins_list.view.*
 import loodos.droid.bitcointicker.R
+import android.widget.Filter
+import android.widget.Filterable
+import java.util.*
 import kotlin.collections.ArrayList
 
 /**
@@ -22,9 +25,10 @@ interface OnItemClickCallback {
 }
 
 class CoinsListAdapter(private val onItemClickCallback: OnItemClickCallback) :
-    RecyclerView.Adapter<CoinsListAdapter.CoinsListViewHolder>() {
+    RecyclerView.Adapter<CoinsListAdapter.CoinsListViewHolder>(), Filterable {
 
     private val coinsList: ArrayList<CoinsListEntity> = arrayListOf()
+    private var coinsFilterList: ArrayList<CoinsListEntity> = coinsList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoinsListViewHolder {
         return CoinsListViewHolder(
@@ -38,6 +42,42 @@ class CoinsListAdapter(private val onItemClickCallback: OnItemClickCallback) :
 
     override fun getItemCount(): Int = coinsList.size
 
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val charSearch = constraint.toString().replace("\\s".toRegex(), "")
+                if (charSearch.isEmpty() || charSearch.isBlank() || charSearch == " ") {
+                    coinsFilterList = coinsList
+                } else {
+                    val resultList = ArrayList<CoinsListEntity>()
+                    for (row in coinsList) {
+                        val containsChar = charSearch.toLowerCase(Locale.ROOT)
+                        if (row.name.toString().toLowerCase(Locale.ROOT).contains(containsChar) ||
+                            row.id.toString().toLowerCase(Locale.ROOT).contains(containsChar) ||
+                            row.symbol.toLowerCase(Locale.ROOT).contains(containsChar)) {
+                            resultList.add(row)
+                        }
+                    }
+                    coinsFilterList = resultList
+                }
+                val filterResults = FilterResults()
+                filterResults.values = coinsFilterList
+                return filterResults
+            }
+
+            @Suppress("UNCHECKED_CAST")
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                coinsFilterList = results?.values as ArrayList<CoinsListEntity>
+                if (constraint.toString().replace("\\s".toRegex(), "")
+                        .isNotEmpty() && coinsFilterList.size > 0) {
+                    updateList(coinsFilterList)
+                } else {
+                    updateList(coinsList)
+                }
+            }
+        }
+    }
+
     fun updateList(list: List<CoinsListEntity>) {
         this.coinsList.clear()
         this.coinsList.addAll(list)
@@ -46,7 +86,9 @@ class CoinsListAdapter(private val onItemClickCallback: OnItemClickCallback) :
 
     class CoinsListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        // bind the data with the list view item
+        /**
+         * bind the data with the list view item
+         */
         fun bind(model: CoinsListEntity, onItemClickCallback: OnItemClickCallback) {
             itemView.coinsItemSymbolTextView.text = model.symbol
             itemView.coinsItemNameTextView.text = model.name.emptyIfNull()

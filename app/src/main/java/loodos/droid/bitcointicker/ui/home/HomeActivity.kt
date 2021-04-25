@@ -8,16 +8,17 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_home.*
 import loodos.droid.bitcointicker.R
 import loodos.droid.bitcointicker.core.common.BaseActivity
 import loodos.droid.bitcointicker.core.common.NavigationHost
-import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class HomeActivity : BaseActivity(), NavigationHost {
 
-    private val viewModel: HomeViewModel by viewModels()
+    //private val viewModel: HomeViewModel by viewModels() // TODO
 
     companion object {
         private val TOP_LEVEL_DESTINATIONS = setOf(
