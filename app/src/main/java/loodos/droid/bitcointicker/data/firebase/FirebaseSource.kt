@@ -3,8 +3,10 @@ package loodos.droid.bitcointicker.data.firebase
 import com.google.firebase.auth.FirebaseAuth
 import io.reactivex.Completable
 import io.reactivex.CompletableEmitter
+import loodos.droid.bitcointicker.util.CustomException
+import javax.inject.Inject
 
-class FirebaseSource {
+class FirebaseSource @Inject constructor(){
 
     private val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
@@ -25,7 +27,11 @@ class FirebaseSource {
                     if (currentUser != null && currentUser.isEmailVerified) {
                         emitter.onComplete()
                     } else {
-                        emitter.onError(it.exception!!)
+                        if (it.exception != null) {
+                            emitter.onError(it.exception!!)
+                        } else {
+                            emitter.onError(CustomException("Please Confirm Your E-Mail Address"))
+                        }
                     }
                 } else emitter.onError(it.exception!!)
             }
@@ -60,6 +66,7 @@ class FirebaseSource {
         val currentUser = firebaseAuth.currentUser
         currentUser?.sendEmailVerification()?.addOnCompleteListener {
             if (it.isSuccessful) {
+                logout()
                 emitter.onComplete()
             } else {
                 emitter.onError(it.exception!!)
