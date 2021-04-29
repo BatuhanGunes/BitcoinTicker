@@ -1,8 +1,9 @@
 package loodos.droid.bitcointicker.data.repositories
 
 import loodos.droid.bitcointicker.data.firebase.FirebaseSource
+import javax.inject.Inject
 
-class UserRepository(private val firebase: FirebaseSource) {
+class UserRepository @Inject constructor(private val firebase: FirebaseSource) {
 
     fun login(email: String, password: String) = firebase.login(email, password)
 
