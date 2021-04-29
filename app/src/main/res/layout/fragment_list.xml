@@ -12,76 +12,66 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/coinListMainLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeListRefreshLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            style="@style/Widget.Custom.Toolbar"
-            android:layout_width="0dp"
-            android:layout_height="?actionBarSize"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:titleTextColor="@color/default_text_color" />
-
-        <SearchView
-            android:id="@+id/search_bar"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/coinListMainLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_start_margin"
-            android:layout_marginTop="@dimen/default_top_margin"
-            android:layout_marginEnd="@dimen/default_start_margin"
-            android:backgroundTint="@color/white"
-            android:foregroundTint="@color/white"
-            android:gravity="center"
-            android:textCursorDrawable="@null"
-            app:iconifiedByDefault="false"
-            app:actionViewClass="androidx.appcompat.widget.SearchView"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:queryBackground="@null" />
+            android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/coinsListRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/default_top_margin"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/search_bar" />
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                style="@style/Widget.Custom.Toolbar"
+                android:layout_width="0dp"
+                android:layout_height="?actionBarSize"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:menu="@menu/toolbar_menu"
+                app:titleTextColor="@color/default_text_color" />
 
-        <ProgressBar
-            android:id="@+id/coinsListLoading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/coinsListRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/default_top_margin"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-        <TextView
-            android:id="@+id/coinsListErrorView"
-            style="@style/TextAppearance.Custom.H1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/large_start_margin"
-            android:drawablePadding="@dimen/default_bottom_margin"
-            android:gravity="center"
-            android:onClick="@{(view) -> viewModel.loadCoinsFromApi(`USD`)}"
-            android:text="@string/coins_list_error"
-            android:visibility="gone"
-            app:drawableBottomCompat="@drawable/ic_baseline_refresh_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+            <ProgressBar
+                android:id="@+id/coinsListLoading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/coinsListErrorView"
+                style="@style/TextAppearance.Custom.H1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/large_start_margin"
+                android:drawablePadding="@dimen/default_bottom_margin"
+                android:gravity="center"
+                android:onClick="@{(view) -> viewModel.loadCoinsFromApi(`USD`)}"
+                android:text="@string/coins_list_error"
+                android:visibility="gone"
+                app:drawableBottomCompat="@drawable/ic_baseline_refresh_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </layout>

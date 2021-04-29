@@ -15,15 +15,16 @@
 
     <string name="all_coins">Kripto Paralar</string>
     <string name="favourites">Favoriler</string>
-    <string name="Search">Arama</string>
+    <string name="search">Arama</string>
     <string name="no_favourites">Herhangi Bir Favori Belirlemediniz</string>
     <string name="added_to_favourite">%1$s Favorilere Eklendi</string>
     <string name="removed_to_favourite">%1$s Favorilerden Kaldırıldı</string>
     <string name="coins_list_error">Kripto Para Listesi Getirilemedi. Lütfen Tekrar Deneyin.</string>
-    <string name="pls_confirm_mail">Lütfen Mail Adresinizi Onaylayın</string>
+    <string name="pls_confirm_mail">Lütfen Mail Adresinize Gönderilen Maili Onaylıynız.</string>
     <string name="historical_data_error">Veriler Alınamadı. Lütfen Tekrar Deneyin.</string>
     <string name="line_chart_title">%1$s Gün İçin Fiyat Grafiği\n(x-ekseni: Tarih, y-ekseni: Fiyat $)</string>
     <string name="search_hint">isim, id veya sembol</string>
+    <string name="refresh_msg">Değerler Yenilendi</string>
 
     <string name="imageButtonDesc">ProfileImageButton</string>
     <string name="favouriteImageViewDesc">favouriteImageView</string>

@@ -71,8 +71,6 @@ class CoinsListAdapter(private val onItemClickCallback: OnItemClickCallback) :
                 if (constraint.toString().replace("\\s".toRegex(), "")
                         .isNotEmpty() && coinsFilterList.size > 0) {
                     updateList(coinsFilterList)
-                } else {
-                    updateList(coinsList)
                 }
             }
         }

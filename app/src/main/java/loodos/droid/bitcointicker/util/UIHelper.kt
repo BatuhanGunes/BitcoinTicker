@@ -44,7 +44,6 @@ object UIHelper {
             startActivity(it)
         }
 
-    // TODO calling this function after the current user has logged out
     fun Context.startLoginActivity() =
         Intent(this, LoginActivity::class.java).also {
             it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
