@@ -15,6 +15,7 @@ import loodos.droid.bitcointicker.util.Constants
 import loodos.droid.bitcointicker.util.extensions.doOnChange
 import kotlinx.android.synthetic.main.fragment_favorites.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_list.*
 import loodos.droid.bitcointicker.R
 import loodos.droid.bitcointicker.databinding.FragmentFavoritesBinding
 
@@ -48,6 +49,12 @@ class FavoritesFragment : MainNavigationFragment(), OnItemClickCallback {
         favouritesRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = favouritesAdapter
+        }
+
+        swipeFavoritesRefreshLayout.setOnRefreshListener {
+            viewModel.loadCoinsFromApi()
+            showToast(getString(R.string.refresh_msg))
+            swipeFavoritesRefreshLayout.isRefreshing = false
         }
     }
 
@@ -86,7 +93,5 @@ class FavoritesFragment : MainNavigationFragment(), OnItemClickCallback {
 
     }
 
-    override fun onFavouriteClicked(symbol: String) {
-        viewModel.updateFavouriteStatus(symbol)
-    }
+    override fun onFavouriteClicked(symbol: String) {}
 }
