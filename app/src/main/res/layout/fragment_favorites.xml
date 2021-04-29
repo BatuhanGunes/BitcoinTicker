@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -10,46 +11,67 @@
             type="loodos.droid.bitcointicker.ui.home.favorites.FavoritesViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/favouritesMainLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeFavoritesRefreshLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            style="@style/Widget.Custom.Toolbar"
-            android:layout_width="0dp"
-            android:layout_height="?actionBarSize"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:titleTextColor="@color/default_text_color"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/favouritesRecyclerView"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/favouritesMainLayout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/default_top_margin"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/noFavouritesView"
-            style="@style/TextAppearance.Custom.H1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/large_start_margin"
-            android:drawablePadding="@dimen/default_bottom_margin"
-            android:gravity="center"
-            android:text="@string/no_favourites"
-            android:visibility="@{viewModel.favouritesEmpty ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                style="@style/Widget.Custom.Toolbar"
+                android:layout_width="0dp"
+                android:layout_height="?actionBarSize"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:titleTextColor="@color/default_text_color">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <Button
+                    android:id="@+id/favoriteLogOutButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/color_primary"
+                    android:onClick="@{(v) -> viewModel.logout(v)}"
+                    android:text="@string/logout"
+                    android:textAllCaps="false"
+                    android:layout_gravity="end"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/mid_text_size" />
+
+            </androidx.appcompat.widget.Toolbar>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/favouritesRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/default_top_margin"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+            <TextView
+                android:id="@+id/noFavouritesView"
+                style="@style/TextAppearance.Custom.H1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/large_start_margin"
+                android:drawablePadding="@dimen/default_bottom_margin"
+                android:gravity="center"
+                android:text="@string/no_favourites"
+                android:visibility="@{viewModel.favouritesEmpty ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </layout>

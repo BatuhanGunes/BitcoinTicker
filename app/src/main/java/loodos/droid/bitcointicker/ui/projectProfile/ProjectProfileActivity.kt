@@ -1,7 +1,6 @@
 package loodos.droid.bitcointicker.ui.projectProfile
 
 import android.os.Bundle
-import android.view.MenuItem
 import android.widget.SeekBar
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
@@ -16,13 +15,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_project_profile.*
 import kotlinx.android.synthetic.main.activity_project_profile.view.*
 import loodos.droid.bitcointicker.R
+import loodos.droid.bitcointicker.adapters.OnItemClickCallback
 import loodos.droid.bitcointicker.core.common.BaseActivity
 import loodos.droid.bitcointicker.data.local.database.CoinsListEntity
 import loodos.droid.bitcointicker.databinding.ActivityProjectProfileBinding
 import loodos.droid.bitcointicker.util.Constants.DEFAULT_LIST_OF_DAYS
 
 @AndroidEntryPoint
-class ProjectProfileActivity : BaseActivity() {
+class ProjectProfileActivity : BaseActivity(), OnItemClickCallback {
 
     private val viewModel: ProjectProfileViewModel by viewModels()
     private lateinit var binding: ActivityProjectProfileBinding
@@ -54,11 +54,18 @@ class ProjectProfileActivity : BaseActivity() {
         supportActionBar?.title = symbol ?: ""
         observeViewModel()
 
-        viewModel.historicalData(symbolId, days = DEFAULT_LIST_OF_DAYS)
+        changeChartTitle(DEFAULT_LIST_OF_DAYS)
+        seekBar.progress = DEFAULT_LIST_OF_DAYS
+        viewModel.historicalData(symbolId, DEFAULT_LIST_OF_DAYS)
     }
 
     private fun observeViewModel() {
         symbol?.let {
+            viewModel.favoriteCoinsList.doOnChange(this) {
+                if (it.isEmpty()) {
+                    viewModel.isFavouritesEmpty(true)
+                }
+            }
             viewModel.projectBySymbol(it).doOnChange(this) { project ->
                 populateViews(project)
             }
@@ -99,8 +106,6 @@ class ProjectProfileActivity : BaseActivity() {
             viewModel.updateFavouriteStatus(project.symbol)
         }
 
-        changeChartTitle(DEFAULT_LIST_OF_DAYS)
-        seekBar.progress = DEFAULT_LIST_OF_DAYS
         seekBar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onStartTrackingTouch(p0: SeekBar?) {}
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
@@ -114,17 +119,21 @@ class ProjectProfileActivity : BaseActivity() {
                 }
             }
         })
+
+        swipeRefreshLayout.setOnRefreshListener {
+            viewModel.loadCoinsFromApi()
+            showToast(getString(R.string.refresh_msg))
+            swipeRefreshLayout.isRefreshing = false
+        }
     }
 
     private fun changeChartTitle(format: Int) {
         lineChartTitle.text = getString(R.string.line_chart_title).format(format)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> finish()
-            else -> return super.onOptionsItemSelected(item)
-        }
-        return true
+    override fun onItemClick(symbol: String, id: String) {}
+
+    override fun onFavouriteClicked(symbol: String) {
+        viewModel.updateFavouriteStatus(symbol)
     }
 }

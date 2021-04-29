@@ -84,6 +84,16 @@ class CoinListFragment : MainNavigationFragment(), OnItemClickCallback {
                 return false
             }
         })
+
+        swipeListRefreshLayout.setOnRefreshListener {
+            viewModel.loadCoinsFromApi()
+            showToast(getString(R.string.refresh_msg))
+            searchEditText.setText("")
+            if (!searchView.isIconified) {
+                searchView.onActionViewCollapsed()
+            }
+            swipeListRefreshLayout.isRefreshing = false
+        }
     }
 
     override fun observeViewModel() {
